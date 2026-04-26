@@ -5,7 +5,7 @@ pipeline {
         IMAGE_NAME    = "myapp"
         NEW_VERSION   = "v${BUILD_NUMBER}"
         REGISTRY      = "runtimeterror01"
-        GITHUB_REPO   = "https://github.com/RuntimeTerror001/vle8.git"
+        GITHUB_REPO   = "https://github.com/RuntimeTerror001/VLE8.git"
     }
 
     stages {
