@@ -25,7 +25,7 @@ pipeline {
 
         stage('Push to Docker Hub') {
             steps {
-                withDockerRegistry([credentialsId: 'dockerhub-creds', url: '']) {
+withDockerRegistry([credentialsId: 'docker-creds', url: '']) {
                     sh "docker push ${REGISTRY}/${IMAGE_NAME}:${NEW_VERSION}"
                 }
             }
