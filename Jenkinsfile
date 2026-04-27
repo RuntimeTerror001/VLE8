@@ -17,23 +17,25 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build Docker Images') {
             steps {
-                bat "docker build -t %REGISTRY%/%IMAGE_NAME%:%NEW_VERSION% ."
+                bat "docker build -t %REGISTRY%/%IMAGE_NAME%:blue-%NEW_VERSION% -f Dockerfile ."
+                bat "docker build -t %REGISTRY%/%IMAGE_NAME%:green-%NEW_VERSION% -f Dockerfile.green ."
             }
         }
 
         stage('Push to Docker Hub') {
             steps {
                 withDockerRegistry([credentialsId: 'docker-creds', url: '']) {
-                    bat "docker push %REGISTRY%/%IMAGE_NAME%:%NEW_VERSION%"
+                    bat "docker push %REGISTRY%/%IMAGE_NAME%:blue-%NEW_VERSION%"
+                    bat "docker push %REGISTRY%/%IMAGE_NAME%:green-%NEW_VERSION%"
                 }
             }
         }
 
         stage('Deploy to Green') {
             steps {
-                bat "kubectl set image deployment/myapp-green myapp=%REGISTRY%/%IMAGE_NAME%:%NEW_VERSION%"
+                bat "kubectl set image deployment/myapp-green myapp=%REGISTRY%/%IMAGE_NAME%:green-%NEW_VERSION%"
                 bat "kubectl rollout status deployment/myapp-green"
             }
         }

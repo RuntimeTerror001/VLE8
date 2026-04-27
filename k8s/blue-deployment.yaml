@@ -19,6 +19,6 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: runtimeterror01/myapp:v1
+        image: runtimeterror01/myapp:v4
         ports:
         - containerPort: 5000
